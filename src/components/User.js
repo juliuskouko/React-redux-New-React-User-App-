@@ -29,8 +29,8 @@ function User({ userData, deleteUser, handleEdit }) {
       <div className="card m-2" style={{ width: "18rem" }}>
         <div className="card-body">
           <h5 className="card-title">Name: {userData.name}</h5>
-          <h5 className="card-title">Team: {userData.team}</h5>
-          <h5 className="card-text">Position: {userData.position}</h5>
+          <h5 className="card-title">Email: {userData.email}</h5>
+          <h5 className="card-text">Gen: {userData.gen}</h5>
           <button
             className="btn btn-primary mr-3"
             onClick={handleShow}

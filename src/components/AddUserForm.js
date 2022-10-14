@@ -4,17 +4,41 @@ import Form from "react-bootstrap/Form";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, connect } from "react-redux";
 import { AddNewUser } from "../actions/userActions";
+import { doc, setDoc, serverTimestamp} from "firebase/firestore";
+// import {
+//   collection,
+//   addDoc,
+  
+// } from "firebase/firestore";
+import { db } from "../Firebase/config";
 
 function AddUserForm({ AddNewUser }) {
   const [name, setName] = useState("");
-  const [position, setPosition] = useState("");
-  const [team, setTeam] = useState("");
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState("");
+  const [gen, setGen] = useState("");
+  const dispatch = useDispatch();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    AddNewUser({ name, team, position, id: uuidv4() });
+    // AddNewUser({ name, email, gen, id: uuidv4() });
     setName("");
-    setTeam("");
-    setPosition("");
+    setEmail("");
+    setGen("");
+
+    const items = {
+      name,
+      email,
+      gen,
+      timestamp: serverTimestamp(),
+      id: uuidv4()
+    }
+
+
+    // await setDoc(doc(db, "users", items.id),items);
+    try {
+      const docRef = await setDoc(doc(db, "users", items.id), items);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -24,32 +48,32 @@ function AddUserForm({ AddNewUser }) {
         <Form.Control
           type="Name"
           value={name}
-          placeholder="Enter Player's Name"
+          placeholder="Enter Username"
           onChange={(e) => {
             setName(e.target.value);
           }}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Team</Form.Label>
+        <Form.Label>Email</Form.Label>
         <Form.Control
-          type="text"
-          value={team}
-          placeholder="Enter Team Name"
+          type="email"
+          value={email}
+          placeholder="Enter Email Address"
           onChange={(e) => {
-            setTeam(e.target.value);
+            setEmail(e.target.value);
           }}
         />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Position</Form.Label>
+        <Form.Label>Gen</Form.Label>
         <Form.Control
-          type="text"
-          value={position}
-          placeholder="Enter Position"
+          type="number"
+          value={gen}
+          placeholder="Enter Gen"
           onChange={(e) => {
-            setPosition(e.target.value);
+            setGen(e.target.value);
           }}
         />
       </Form.Group>

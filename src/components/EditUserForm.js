@@ -8,14 +8,14 @@ function EditUserForm({ userData, deleteUser, handleEdit, hide }) {
   const dispatch = useDispatch();
 
   const [name, setName] = useState(userData.name);
-  const [team, setTeam] = useState(userData.team);
-  const [position, setPosition] = useState(userData.position);
+  const [email, setEmail] = useState(userData.email);
+  const [gen, setGen] = useState(userData.gen);
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(EditUser({ id: userData.id, name, team, position }));
+    dispatch(EditUser({ id: userData.id, name, email, gen }));
     setName("");
-    setTeam("");
-    setPosition("");
+    setEmail("");
+    setGen("");
     hide();
   };
 
@@ -25,7 +25,7 @@ function EditUserForm({ userData, deleteUser, handleEdit, hide }) {
         <Form.Label>Name</Form.Label>
         <Form.Control
           type="Name"
-          placeholder="Enter Name"
+          placeholder="Enter Username"
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -33,25 +33,25 @@ function EditUserForm({ userData, deleteUser, handleEdit, hide }) {
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Team</Form.Label>
+        <Form.Label>Email</Form.Label>
         <Form.Control
-          type="text"
-          placeholder="Enter Team Name"
-          value={team}
+          type="email"
+          placeholder="Enter Email Address"
+          value={email}
           onChange={(e) => {
-            setTeam(e.target.value);
+            setEmail(e.target.value);
           }}
         />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Position</Form.Label>
+        <Form.Label>Gen</Form.Label>
         <Form.Control
-          type="text"
-          placeholder="Enter Position"
-          value={position}
+          type="number"
+          placeholder="Enter Gen"
+          value={gen}
           onChange={(e) => {
-            setPosition(e.target.value);
+            setGen(e.target.value);
           }}
         />
       </Form.Group>
